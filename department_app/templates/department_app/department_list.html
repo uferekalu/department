@@ -1,0 +1,45 @@
+{% extends "department_app/base.html" %}
+
+{% block content %}
+
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Full Name</td>
+            <td>Amount</td>
+            <td>Balance</td>
+            <td>Total</td>
+            <td>Mobile</td>
+            <td>Department</td>
+            <td>
+                <a href="{% url 'department_app:department_insert' %}" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i> Add New
+                </a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for department in department_list %}
+            <tr>
+                <td>{{department.fullname}}</td>
+                <td>{{department.amount}}</td>
+                <td>{{department.balance}}</td>
+                <td>{{department.total}}</td>
+                <td>{{department.mobile}}</td>
+                <td>{{department.dept}}</td>
+                <td>
+                    <a href="{% url 'department_app:department_update' department.id %}" class="btn text-secondary px-0">
+                        <i class="fas fa-edit fa-lg"></i>
+                    </a>
+                    <form action="{% url 'department_app:department_delete' department.id %}" method="post" class=d-inline>
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <i class="fas fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
